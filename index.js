@@ -4,6 +4,14 @@ var path = require("path");
 var bodyParser = require("body-parser");
 var crypto = require("crypto");
 
+var mongoose = require("mongoose");
+var models = require("./models/models.js");
+
+var User = models.User;
+
+mongoose.connect("mongodb://localhost:27017/notes");
+mongoose.connection.on('error', console.error.bind(console,"数据库连接失败"));
+
 var app = express();
 
 app.set('views',path.join(__dirname,'views'));
@@ -26,6 +34,57 @@ app.get('/register',function(req,res){
     title:'注册'
   });
 });
+
+app.post('/register',function(req,res){
+  var username = req.body.username, password=req.body.password, passwordRepeat=req.body.passwordRepeat;  if ( username.trim().length == 0 ){
+    console.log("用户名不能为空");
+    return res.redirect('/register');
+  }
+  
+  if ( password.trim().length == 0 || passwordRepeat.trim().length == 0 ){
+    console.log("密码不能为空");
+    return res.redirect('/register');
+  }
+ 
+  if ( password!=passwordRepeat ){
+    console.log("两次输入密码不一致");
+    return res.redirect('/register');
+  }
+  
+  User.findOne({username:username},function(err, user){
+    if (err){
+      console.log(err);
+      return res.redirect('/register');
+    }
+
+    if (user){
+      console.log("用户名已经存在");
+      return res.redirect('/register');
+    }
+
+    var md5 = crypto.createHash("md5");
+    var md5Pass = md5.update(password).digest('hex');
+
+    var newUser= new User({
+      username : username,
+      password : md5Pass
+    });
+
+
+    newUser.save(function(err,doc){
+      if (err){
+        console.log(err);
+        return res.redirect('/register');
+      }
+      console.log('注册成功');
+      return res.redirect('/');
+      
+    });
+  });
+    
+      
+});
+
 
 app.get('/login',function(req,res){
   console.log('登录');
