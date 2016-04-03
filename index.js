@@ -4,10 +4,11 @@ var path = require("path");
 var bodyParser = require("body-parser");
 var crypto = require("crypto");
 var session= require("express-session");
-
+var moment = require("moment");
 
 var mongoose = require("mongoose");
 var models = require("./models/models.js");
+var checkLogin = require('./checkLogin.js'); 
 
 var User = models.User;
 var Note = models.Note;
@@ -32,12 +33,20 @@ app.use(session({
   saveUninitialized: true
 }));
 
-
+app.get('/',checkLogin.noLogin);
 app.get('/',function(req,res){
-  res.render('index',{
-    user: req.session.user,
-    title: 'FrontPage'
-  });
+  Note.find({author: req.session.user.username})
+    .exec(function(err,allNotes){
+      if (err) {
+        console.log(err);
+        return res.redirect('/');
+      }  
+      res.render('index',{
+        user: req.session.user,
+        title: '首页·',
+        notes: allNotes
+      });
+    })
 });
 
 app.get('/register',function(req,res){
@@ -170,11 +179,25 @@ app.post('/post',function(req,res){
   });
 });
 
-app.get('/detail',function(req,res){
+app.get('/detail/:_id',function(req,res){
   console.log('查看笔记')
-  res.render('detail',{
-    title:'查看笔记'
-  });
+  Note.findOne({_id:req.params._id})
+    .exec(function(err, art){
+      if (err) {
+        console.log(err);
+        return res.redirect('/');
+      }
+
+      if (art) {
+        res.render('detail',{
+          title: '笔记详情',
+          user: req.session.user,
+          art: art,
+          moment: moment
+        });
+      }
+
+    });
 });
 
 app.listen(3000,function(req,res){
