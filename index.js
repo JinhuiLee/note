@@ -90,11 +90,23 @@ app.get('/register',function(req,res){
   var error=req.session.error;
   req.session.error="";
   res.render('register',{
-    user: req.session.user,
     title:'注册',
     error: error
   });
 });
+
+
+function checkInfo(username,password){
+  var reg = /\w{3,20}/;//正则
+  if(!reg.test(username)) return false;
+  var lcase=false,ucase=false,digit=false;
+  for (var i=0;i<password.length;i++){
+    if (password[i]>='a' && password[i]<='z') lcase=true;
+    if (password[i]>='A' && password[i]<='Z') ucase=true;
+    if (password[i]>='0' && password[i]<='9') digit=true;
+  }  
+  return lcase&&ucase&&digit;
+}
 
 app.post('/register',function(req,res){
   var username = req.body.username, password=req.body.password, passwordRepeat=req.body.passwordRepeat;  if ( username.trim().length == 0 ){
@@ -123,13 +135,20 @@ app.post('/register',function(req,res){
     }
 
     if (user){
+      req.session.error="用户名已经存在"
       console.log("用户名已经存在");
       return res.redirect('/register');
     }
 
+    if (!checkInfo(username,password)){
+      req.session.error="用户名：只能是字母、数字、下划线的组合，长度3-20个字符 密码：长度不能少于6，必须同时包含数字、小写字母、大写字母";
+      console.log("格式验证错误");
+      return res.redirect('/register'); 
+    }
+
     var md5 = crypto.createHash("md5");
     var md5Pass = md5.update(password).digest('hex');
-
+    
     var newUser= new User({
       username : username,
       password : md5Pass
