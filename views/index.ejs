@@ -23,11 +23,19 @@
          <a href="/detail/<%= note._id %>"><%= note.title %></a>
        </td>
        <td><%= note.tag %></td>
-       <td><%= note.createTime %> </td>
+       <td><%= moment(note.createTime).locale('zh-cn').format('LL HH:mm:ss') %> </td>
     </tr>
     <% }); %>
-    </tbody> 
+    </tbody>
+    
+ 
   </table>
+  <ul class="pagination pagination-lg">
+      <li><a href="/start/<%= prev %>">&laquo;</a></li>
+      <% for (var i=1,j=1;i<number;i=i+nitems,j++) { %>
+      <li><a href="/start/<%= i %>"><%= j %></a></li>
+      <% } %>
+      <li><a href="/start/<%= next %>">&raquo;</a></li>
+    </ul>
 </div>
-
 <%- include footer %>

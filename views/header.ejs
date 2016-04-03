@@ -11,6 +11,19 @@
   </head>
   <body>
 
+<% if(typeof error!="undefined" && error!="") { %>
+<div class="alert alert-warning">
+<a href="#" class="close" data-dismiss="alert"></a>
+<strong>警告: </strong><%= error %>
+</div>
+
+<script type="text/javascript">
+setTimeout("$('.alert').alert('close')",3000);
+</script>
+
+<% } %>
+
+
 
 <div class="clearfix page-nav">
 <% if(typeof user!="undefined") { %>
