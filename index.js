@@ -3,12 +3,14 @@ var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser");
 var crypto = require("crypto");
+var session= require("express-session");
+
 
 var mongoose = require("mongoose");
 var models = require("./models/models.js");
 
 var User = models.User;
-
+var Note = models.Note;
 mongoose.connect("mongodb://localhost:27017/notes");
 mongoose.connection.on('error', console.error.bind(console,"数据库连接失败"));
 
@@ -22,8 +24,18 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(session({
+  secret: '1234',
+  name: 'munote',
+  cookie: {maxAge: 100*60*20},
+  resave: false,
+  saveUninitialized: true
+}));
+
+
 app.get('/',function(req,res){
   res.render('index',{
+    user: req.session.user,
     title: 'FrontPage'
   });
 });
@@ -31,6 +43,7 @@ app.get('/',function(req,res){
 app.get('/register',function(req,res){
   console.log('注册');
   res.render('register',{
+    user: req.session.user,
     title:'注册'
   });
 });
@@ -93,8 +106,41 @@ app.get('/login',function(req,res){
   });
 });
 
+app.post('/login',function(req,res){
+  var username=req.body.username;
+  var password=req.body.password;
+  
+  User.findOne({username:username},function(err,user) {
+    if (err) {
+      console.log(err);
+      return res.redirect('/login');
+    }
+
+    if (!user) {
+      console.log('用户不存在');
+      return res.redirect('/login');
+    }
+
+    var md5= crypto.createHash('md5');
+    var md5password=md5.update(password).digest('hex');
+    if (user.password!==md5password){
+      console.log('密码错误');
+      return res.redirect('/login');
+    }
+    
+    console.log('登录成功');
+    user.password=null;
+    delete user.password;
+    req.session.user=user;
+    return res.redirect('/');
+
+  });
+});
+
+
 app.get('/quit',function(req,res){
-  console.log('登录');
+  console.log('退出');
+  req.session.user=null;
   return res.redirect('/login');
 });
 
@@ -102,6 +148,25 @@ app.get('/post',function(req,res){
   console.log('发布');
   res.render('post',{
     title:'发布'  
+  });
+});
+
+app.post('/post',function(req,res){
+  var note = new Note({
+    title: req.body.title,
+    author: req.session.user.username,
+    tag: req.body.tag,
+    content: req.body.content
+  });
+
+  note.save(function(err,doc) {
+    if (err){
+      console.log(err);
+      return res.redirect('/post');
+    }
+    console.log('文章发表成功!')
+    return res.redirect('/');
+   
   });
 });
 
