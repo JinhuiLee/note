@@ -9,7 +9,7 @@ var moment = require("moment");
 var mongoose = require("mongoose");
 var models = require("./models/models.js");
 var checkLogin = require('./checkLogin.js'); 
-
+var fs =  require("fs");
 var User = models.User;
 var Note = models.Note;
 mongoose.connect("mongodb://localhost:27017/notes");
@@ -20,7 +20,68 @@ var app = express();
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','ejs');
 
-app.use(express.static(path.join(__dirname,'public')));
+//app.use(express.static(path.join(__dirname,'public')));
+//app.use(serveStatic(path.join(__dirname,'public')));
+
+String.prototype.startWith=function(str){     
+  var reg=new RegExp("^"+str);     
+  return reg.test(this);        
+}  
+
+
+function serveStatic (root) {
+  return function (req, res, next) {
+
+    var file = req.originalUrl.slice(req.baseUrl.length + 1);
+    file = path.resolve(root, file);
+    
+    fileStr=file+"";
+    rootStr=root+"";
+    if (!fileStr.startWith(rootStr) || !fs.existsSync(file)) 
+    {  
+       console.log(fileStr.startWith(rootStr));
+       return next();
+    }
+   
+    var stat=fs.statSync(file+"");
+    
+    if (stat.isFile()) {
+      file = file;
+    }
+    else if (stat.isDirectory()) {
+      file = file+"/index.html";
+      console.log("redirect to "+file);
+    }
+    else {
+      return next();
+    }
+  
+    if (!fs.existsSync(file)) return next();
+    res.writeHead(200,resolveFsType(path.extname(file+"")));
+    var stream = fs.createReadStream(file);
+    stream.pipe(res);
+
+
+  };
+}
+
+function resolveFsType(file){
+   console.log(file);
+   var obj;
+   switch(file){
+     case ".css" : 
+       obj = {'Content-Type': 'text/css'} 
+       break;
+     case ".js":
+       obj = {'Content-Type': 'text/javascript'} 
+       break;
+     default:
+       obj = {'Content-Type': 'text/plain'}
+       break;
+   }
+   return obj;
+}
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -282,6 +343,8 @@ app.get('/detail/:_id',function(req,res){
 
     });
 });
+app.use(serveStatic(path.join(__dirname,'public')));
+
 
 app.listen(3000,function(req,res){
   console.log('app is running at port 3000');
