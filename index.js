@@ -8,7 +8,7 @@ var moment = require("moment");
 
 var mongoose = require("mongoose");
 var models = require("./models/models.js");
-var checkLogin = require('./checkLogin.js'); 
+var checkLogin = require('./checkLogin.js');
 var fs =  require("fs");
 var User = models.User;
 var Note = models.Note;
@@ -20,13 +20,13 @@ var app = express();
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','ejs');
 
-//app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname,'public')));
 //app.use(serveStatic(path.join(__dirname,'public')));
 
-String.prototype.startWith=function(str){     
-  var reg=new RegExp("^"+str);     
-  return reg.test(this);        
-}  
+String.prototype.startWith=function(str){
+  var reg=new RegExp("^"+str);
+  return reg.test(this);
+}
 
 
 function serveStatic (root) {
@@ -34,17 +34,20 @@ function serveStatic (root) {
 
     var file = req.originalUrl.slice(req.baseUrl.length + 1);
     file = path.resolve(root, file);
-    
+
     fileStr=file+"";
     rootStr=root+"";
-    if (!fileStr.startWith(rootStr) || !fs.existsSync(file)) 
-    {  
+    if ( !fs.existsSync(file))
+    {
+       //!fileStr.startWith(rootStr) ||
+	   console.log(fileStr);
+	   console.log(rootStr);
        console.log(fileStr.startWith(rootStr));
        return next();
     }
-   
+
     var stat=fs.statSync(file+"");
-    
+
     if (stat.isFile()) {
       file = file;
     }
@@ -55,7 +58,7 @@ function serveStatic (root) {
     else {
       return next();
     }
-  
+
     if (!fs.existsSync(file)) return next();
     res.writeHead(200,resolveFsType(path.extname(file+"")));
     var stream = fs.createReadStream(file);
@@ -69,11 +72,11 @@ function resolveFsType(file){
    console.log(file);
    var obj;
    switch(file){
-     case ".css" : 
-       obj = {'Content-Type': 'text/css'} 
+     case ".css" :
+       obj = {'Content-Type': 'text/css'}
        break;
      case ".js":
-       obj = {'Content-Type': 'text/javascript'} 
+       obj = {'Content-Type': 'text/javascript'}
        break;
      default:
        obj = {'Content-Type': 'text/plain'}
@@ -112,12 +115,12 @@ app.get('/start/:curr',function(req,res){
       if (err) {
         console.log(err);
         return res.redirect('/');
-      } 
-      
+      }
+
       var error=req.session.error;
       req.session.error="";
-      
-     
+
+
       var number=allNotes.length;
       var curr=parseInt(req.params.curr);
       var prev=curr>nitems? curr-nitems: 1;
@@ -145,7 +148,7 @@ app.get('/start/:curr',function(req,res){
 app.get('/register',function(req,res){
   if (req.session.user){
     req.session.error="您已登录";
-    return res.redirect('/');  
+    return res.redirect('/');
   }
   console.log('注册');
   var error=req.session.error;
@@ -165,7 +168,7 @@ function checkInfo(username,password){
     if (password[i]>='a' && password[i]<='z') lcase=true;
     if (password[i]>='A' && password[i]<='Z') ucase=true;
     if (password[i]>='0' && password[i]<='9') digit=true;
-  }  
+  }
   return lcase&&ucase&&digit;
 }
 
@@ -175,19 +178,19 @@ app.post('/register',function(req,res){
     console.log("用户名不能为空");
     return res.redirect('/register');
   }
-  
+
   if ( password.trim().length == 0 || passwordRepeat.trim().length == 0 ){
     req.session.error="密码不能为空";
     console.log("密码不能为空");
     return res.redirect('/register');
   }
- 
+
   if ( password!=passwordRepeat ){
     req.session.error="两次输入密码不一致"
     console.log("两次输入密码不一致");
     return res.redirect('/register');
   }
-  
+
   User.findOne({username:username},function(err, user){
     if (err){
       req.session.error="注册用户错误";
@@ -204,12 +207,12 @@ app.post('/register',function(req,res){
     if (!checkInfo(username,password)){
       req.session.error="用户名：只能是字母、数字、下划线的组合，长度3-20个字符 密码：长度不能少于6，必须同时包含数字、小写字母、大写字母";
       console.log("格式验证错误");
-      return res.redirect('/register'); 
+      return res.redirect('/register');
     }
 
     var md5 = crypto.createHash("md5");
     var md5Pass = md5.update(password).digest('hex');
-    
+
     var newUser= new User({
       username : username,
       password : md5Pass
@@ -223,23 +226,23 @@ app.post('/register',function(req,res){
       }
       console.log('注册成功');
       return res.redirect('/');
-      
+
     });
   });
-    
-      
+
+
 });
 
 
 app.get('/login',function(req,res){
   console.log('登录');
-  
+
   if (req.session.user)
   {
     req.session.error="您已登录";
     return res.redirect('/');
   }
-  
+
   var error=req.session.error;
   req.session.error="";
   res.render('login',{
@@ -251,7 +254,7 @@ app.get('/login',function(req,res){
 app.post('/login',function(req,res){
   var username=req.body.username;
   var password=req.body.password;
-  
+
   User.findOne({username:username},function(err,user) {
     if (err) {
       req.session.error="登录错误";
@@ -272,7 +275,7 @@ app.post('/login',function(req,res){
       console.log('密码错误');
       return res.redirect('/login');
     }
-    
+
     console.log('登录成功');
     user.password=null;
     delete user.password;
@@ -295,7 +298,7 @@ app.get('/post',function(req,res){
   req.session.error="";
   res.render('post',{
     title:'发布',
-    error: error 
+    error: error
   });
 });
 
@@ -315,7 +318,7 @@ app.post('/post',function(req,res){
     }
     console.log('文章发表成功!')
     return res.redirect('/');
-   
+
   });
 });
 
@@ -343,7 +346,7 @@ app.get('/detail/:_id',function(req,res){
 
     });
 });
-app.use(serveStatic(path.join(__dirname,'public')));
+//app.use(serveStatic(path.join(__dirname,'public')));
 
 
 app.listen(3000,function(req,res){

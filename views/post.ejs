@@ -1,22 +1,410 @@
 <%- include header %>
+<!-- page specific plugin styles -->
+  <link rel="stylesheet" href="/assets/css/jquery-ui.custom.css" />
+<script src="/assets/js/jquery.js"></script>
+
 <div class="container">
+  <div class="space-10"> </div>
   <div class="row">
-    <div class="col-xs-4 col-xs-offset-4">
-      <form method="post">
-        <div class="form-group">
-          <input type="text" class="form-control" name="title" placeholder="标题">
-        </div>
-	<div class="form-group">
-          <input type="text" class="form-control" name="tag" placeholder="标签">
-        </div>
-        
-        <div class="form-group">
-          <textarea type="text" class="form-control" name="content" placeholder="内容"></textarea>
-        </div>
-       
-        <button type="submit" class="btn btn-default center-block">发表</button>
-      </form>
-    </div>
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-4">
+
+
+
+
+      </div>
+            <div class="center">
+							<div class="col-xs-10 col-xs-offset-1">
+								<!-- PAGE CONTENT BEGINS -->
+								<h4 class="header green clearfix">
+									日记编辑
+
+								</h4>
+
+                <form method="post">
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="title" placeholder="标题">
+                  </div>
+          	<div class="form-group">
+                    <input type="text" class="form-control" name="tag" placeholder="标签">
+                  </div>
+								 <div class="wysiwyg-toolbar btn-toolbar center      "> <div class="btn-group">  <a class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Font"><i class=" ace-icon fa fa-font"></i><i class=" ace-icon fa fa-angle-down icon-on-right"></i></a>  <ul class="dropdown-menu dropdown-light dropdown-caret"> <li><a data-edit="fontName Arial" style="font-family:'Arial'">Arial</a></li>  <li><a data-edit="fontName Courier" style="font-family:'Courier'">Courier</a></li>  <li><a data-edit="fontName Comic Sans MS" style="font-family:'Comic Sans MS'">Comic Sans MS</a></li>  <li><a data-edit="fontName Helvetica" style="font-family:'Helvetica'">Helvetica</a></li>  <li><a data-edit="fontName Open Sans" style="font-family:'Open Sans'">Open Sans</a></li>  <li><a data-edit="fontName Tahoma" style="font-family:'Tahoma'">Tahoma</a></li>  <li><a data-edit="fontName Verdana" style="font-family:'Verdana'">Verdana</a></li>  </ul> </div> <div class="btn-group">  <a class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Font Size"><i class=" ace-icon fa fa-text-height"></i>&nbsp;<i class=" ace-icon fa fa-angle-down icon-on-right"></i></a>  <ul class="dropdown-menu dropdown-light dropdown-caret">  <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>  <li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>  <li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>  </ul>  </div> <div class="btn-group">  <a class="btn btn-sm btn-info" data-edit="bold" title="" data-original-title="Bold (Ctrl/Cmd+B)"><i class=" ace-icon fa fa-bold"></i></a>  <a class="btn btn-sm btn-info" data-edit="italic" title="" data-original-title="Italic (Ctrl/Cmd+I)"><i class=" ace-icon fa fa-italic"></i></a>  <a class="btn btn-sm btn-info" data-edit="strikethrough" title="" data-original-title="Strikethrough"><i class=" ace-icon fa fa-strikethrough"></i></a>  <a class="btn btn-sm btn-info" data-edit="underline" title="" data-original-title="Underline"><i class=" ace-icon fa fa-underline"></i></a>  </div> <div class="btn-group">  <a class="btn btn-sm btn-success" data-edit="insertunorderedlist" title="" data-original-title="Bullet list"><i class=" ace-icon fa fa-list-ul"></i></a>  <a class="btn btn-sm btn-success" data-edit="insertorderedlist" title="" data-original-title="Number list"><i class=" ace-icon fa fa-list-ol"></i></a>  <a class="btn btn-sm btn-purple" data-edit="outdent" title="" data-original-title="Reduce indent (Shift+Tab)"><i class=" ace-icon fa fa-outdent"></i></a>  <a class="btn btn-sm btn-purple" data-edit="indent" title="" data-original-title="Indent (Tab)"><i class=" ace-icon fa fa-indent"></i></a>  </div> <div class="btn-group">  <a class="btn btn-sm btn-primary" data-edit="justifyleft" title="" data-original-title="Align Left (Ctrl/Cmd+L)"><i class=" ace-icon fa fa-align-left"></i></a>  <a class="btn btn-sm btn-primary active" data-edit="justifycenter" title="" data-original-title="Center (Ctrl/Cmd+E)"><i class=" ace-icon fa fa-align-center"></i></a>  <a class="btn btn-sm btn-primary" data-edit="justifyright" title="" data-original-title="Align Right (Ctrl/Cmd+R)"><i class=" ace-icon fa fa-align-right"></i></a>  <a class="btn btn-sm btn-inverse" data-edit="justifyfull" title="" data-original-title="Justify (Ctrl/Cmd+J)"><i class=" ace-icon fa fa-align-justify"></i></a>  </div> <div class="btn-group">  <div class="btn-group"> <a class="btn btn-sm btn-pink dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Hyperlink"><i class=" ace-icon fa fa-link"></i></a>  <div class="dropdown-menu dropdown-caret dropdown-menu-right">							 <div class="input-group">								<input class="form-control" placeholder="URL" type="text" data-edit="createLink">								<span class="input-group-btn">									<button class="btn btn-sm btn-primary" type="button">Add</button>								</span>							 </div>						</div> </div> <a class="btn btn-sm btn-pink" data-edit="unlink" title="" data-original-title="Remove Hyperlink"><i class=" ace-icon fa fa-chain-broken"></i></a>  </div> <div class="btn-group">  <div class="btn-group"> <a class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Insert picture"><i class=" ace-icon fa fa-picture-o"></i></a>  <div class="dropdown-menu dropdown-caret dropdown-menu-right">							 <div class="input-group">								<input class="form-control" placeholder="Image URL" type="text" data-edit="insertImage">								<span class="input-group-btn">									<button class="btn btn-sm btn-primary" type="button">Insert</button>								</span>							 </div><div class="space-2"></div>							 <label class="center block no-margin-bottom">								<button class="btn btn-sm btn-success wysiwyg-choose-file" type="button"><i class=" ace-icon fa fa-file"></i> Choose Image …</button>								<input type="file" data-edit="insertImage">							  </label> </div> </div> </div> <div class="btn-group">  <select class="hide wysiwyg_colorpicker" title="Change Color">  <option value="#ac725e">#ac725e</option>  <option value="#d06b64">#d06b64</option>  <option value="#f83a22">#f83a22</option>  <option value="#fa573c">#fa573c</option>  <option value="#ff7537">#ff7537</option>  <option value="#ffad46">#ffad46</option>  <option value="#42d692">#42d692</option>  <option value="#16a765">#16a765</option>  <option value="#7bd148">#7bd148</option>  <option value="#b3dc6c">#b3dc6c</option>  <option value="#fbe983">#fbe983</option>  <option value="#fad165">#fad165</option>  <option value="#92e1c0">#92e1c0</option>  <option value="#9fe1e7">#9fe1e7</option>  <option value="#9fc6e7">#9fc6e7</option>  <option value="#4986e7">#4986e7</option>  <option value="#9a9cff">#9a9cff</option>  <option value="#b99aff">#b99aff</option>  <option value="#c2c2c2">#c2c2c2</option>  <option value="#cabdbf">#cabdbf</option>  <option value="#cca6ac">#cca6ac</option>  <option value="#f691b2">#f691b2</option>  <option value="#cd74e6">#cd74e6</option>  <option value="#a47ae2">#a47ae2</option>  <option value="#444444">#444444</option>  </select><div class="dropdown dropdown-colorpicker">		<a data-toggle="dropdown" class="dropdown-toggle" data-position="auto" href="#"><span class="btn-colorpicker" style="background-color:#ac725e" data-original-title="" title=""></span></a><ul class="dropdown-menu dropdown-caret dropdown-menu-right"><li><a class="colorpick-btn selected" href="#" style="background-color:#ac725e;" data-color="#ac725e"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#d06b64;" data-color="#d06b64"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#f83a22;" data-color="#f83a22"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#fa573c;" data-color="#fa573c"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#ff7537;" data-color="#ff7537"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#ffad46;" data-color="#ffad46"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#42d692;" data-color="#42d692"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#16a765;" data-color="#16a765"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#7bd148;" data-color="#7bd148"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#b3dc6c;" data-color="#b3dc6c"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#fbe983;" data-color="#fbe983"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#fad165;" data-color="#fad165"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#92e1c0;" data-color="#92e1c0"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#9fe1e7;" data-color="#9fe1e7"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#9fc6e7;" data-color="#9fc6e7"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#4986e7;" data-color="#4986e7"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#9a9cff;" data-color="#9a9cff"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#b99aff;" data-color="#b99aff"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#c2c2c2;" data-color="#c2c2c2"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#cabdbf;" data-color="#cabdbf"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#cca6ac;" data-color="#cca6ac"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#f691b2;" data-color="#f691b2"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#cd74e6;" data-color="#cd74e6"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#a47ae2;" data-color="#a47ae2"></a></li><li><a class="colorpick-btn" href="#" style="background-color:#444444;" data-color="#444444"></a></li></ul></div>  <input style="display:none;" disabled="" class="hide" type="text" data-edit="foreColor">  </div> <div class="btn-group">  <a class="btn btn-sm btn-grey" data-edit="undo" title="" data-original-title="Undo (Ctrl/Cmd+Z)"><i class=" ace-icon fa fa-undo"></i></a>  <a class="btn btn-sm btn-grey" data-edit="redo" title="" data-original-title="Redo (Ctrl/Cmd+Y)"><i class=" ace-icon fa fa-repeat"></i></a>  </div>  </div> <div class="wysiwyg-editor" id="editor1" contenteditable="true" name="content"></div>
+
+								<div class="hr hr-double dotted"></div>
+                <button type="submit" class="btn btn-default center-block">发表</button>
+								<script type="text/javascript">
+									var $path_assets = "/assets";//this will be used in loading jQuery UI if needed!
+								</script>
+
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+              </form>
+						</div>
+          </div>
+
   </div>
 </div>
+
+
+<script src="/assets/js/jquery-ui.custom.js"></script>
+		<script src="/assets/js/jquery.ui.touch-punch.js"></script>
+		<script src="/assets/js/markdown/markdown.js"></script>
+		<script src="/assets/js/markdown/bootstrap-markdown.js"></script>
+		<script src="/assets/js/jquery.hotkeys.js"></script>
+		<script src="/assets/js/bootstrap-wysiwyg.js"></script>
+		<script src="/assets/js/bootbox.js"></script>
+    <!-- inline scripts related to this page -->
+   <script type="text/javascript">
+     jQuery(function($){
+
+       //handling tabs and loading/displaying relevant messages and forms
+       //not needed if using the alternative view, as described in docs
+       $('#inbox-tabs a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+         var currentTab = $(e.target).data('target');
+         if(currentTab == 'write') {
+           Inbox.show_form();
+         }
+         else if(currentTab == 'inbox') {
+           Inbox.show_list();
+         }
+       })
+
+
+
+       //basic initializations
+       $('.message-list .message-item input[type=checkbox]').removeAttr('checked');
+       $('.message-list').on('click', '.message-item input[type=checkbox]' , function() {
+         $(this).closest('.message-item').toggleClass('selected');
+         if(this.checked) Inbox.display_bar(1);//display action toolbar when a message is selected
+         else {
+           Inbox.display_bar($('.message-list input[type=checkbox]:checked').length);
+           //determine number of selected messages and display/hide action toolbar accordingly
+         }
+       });
+
+
+       //check/uncheck all messages
+       $('#id-toggle-all').removeAttr('checked').on('click', function(){
+         if(this.checked) {
+           Inbox.select_all();
+         } else Inbox.select_none();
+       });
+
+       //select all
+       $('#id-select-message-all').on('click', function(e) {
+         e.preventDefault();
+         Inbox.select_all();
+       });
+
+       //select none
+       $('#id-select-message-none').on('click', function(e) {
+         e.preventDefault();
+         Inbox.select_none();
+       });
+
+       //select read
+       $('#id-select-message-read').on('click', function(e) {
+         e.preventDefault();
+         Inbox.select_read();
+       });
+
+       //select unread
+       $('#id-select-message-unread').on('click', function(e) {
+         e.preventDefault();
+         Inbox.select_unread();
+       });
+
+       /////////
+
+       //display first message in a new area
+       $('.message-list .message-item:eq(0) .text').on('click', function() {
+         //show the loading icon
+         $('.message-container').append('<div class="message-loading-overlay"><i class="fa-spin ace-icon fa fa-spinner orange2 bigger-160"></i></div>');
+
+         $('.message-inline-open').removeClass('message-inline-open').find('.message-content').remove();
+
+         var message_list = $(this).closest('.message-list');
+
+         $('#inbox-tabs a[href="#inbox"]').parent().removeClass('active');
+         //some waiting
+         setTimeout(function() {
+
+           //hide everything that is after .message-list (which is either .message-content or .message-form)
+           message_list.next().addClass('hide');
+           $('.message-container').find('.message-loading-overlay').remove();
+
+           //close and remove the inline opened message if any!
+
+           //hide all navbars
+           $('.message-navbar').addClass('hide');
+           //now show the navbar for single message item
+           $('#id-message-item-navbar').removeClass('hide');
+
+           //hide all footers
+           $('.message-footer').addClass('hide');
+           //now show the alternative footer
+           $('.message-footer-style2').removeClass('hide');
+
+
+           //move .message-content next to .message-list and hide .message-list
+           $('.message-content').removeClass('hide').insertAfter(message_list.addClass('hide'));
+
+           //add scrollbars to .message-body
+           $('.message-content .message-body').ace_scroll({
+             size: 150,
+             mouseWheelLock: true,
+             styleClass: 'scroll-visible'
+           });
+
+         }, 500 + parseInt(Math.random() * 500));
+       });
+
+
+       //display second message right inside the message list
+       $('.message-list .message-item:eq(1) .text').on('click', function(){
+         var message = $(this).closest('.message-item');
+
+         //if message is open, then close it
+         if(message.hasClass('message-inline-open')) {
+           message.removeClass('message-inline-open').find('.message-content').remove();
+           return;
+         }
+
+         $('.message-container').append('<div class="message-loading-overlay"><i class="fa-spin ace-icon fa fa-spinner orange2 bigger-160"></i></div>');
+         setTimeout(function() {
+           $('.message-container').find('.message-loading-overlay').remove();
+           message
+             .addClass('message-inline-open')
+             .append('<div class="message-content" />')
+           var content = message.find('.message-content:last').html( $('#id-message-content').html() );
+
+           //remove scrollbar elements
+           content.find('.scroll-track').remove();
+           content.find('.scroll-content').children().unwrap();
+
+           content.find('.message-body').ace_scroll({
+             size: 150,
+             mouseWheelLock: true,
+             styleClass: 'scroll-visible'
+           });
+
+         }, 500 + parseInt(Math.random() * 500));
+
+       });
+
+
+
+       //back to message list
+       $('.btn-back-message-list').on('click', function(e) {
+
+         e.preventDefault();
+         $('#inbox-tabs a[href="#inbox"]').tab('show');
+       });
+
+
+
+       //hide message list and display new message form
+       /**
+       $('.btn-new-mail').on('click', function(e){
+         e.preventDefault();
+         Inbox.show_form();
+       });
+       */
+
+
+
+
+       var Inbox = {
+         //displays a toolbar according to the number of selected messages
+         display_bar : function (count) {
+           if(count == 0) {
+             $('#id-toggle-all').removeAttr('checked');
+             $('#id-message-list-navbar .message-toolbar').addClass('hide');
+             $('#id-message-list-navbar .message-infobar').removeClass('hide');
+           }
+           else {
+             $('#id-message-list-navbar .message-infobar').addClass('hide');
+             $('#id-message-list-navbar .message-toolbar').removeClass('hide');
+           }
+         }
+         ,
+         select_all : function() {
+           var count = 0;
+           $('.message-item input[type=checkbox]').each(function(){
+             this.checked = true;
+             $(this).closest('.message-item').addClass('selected');
+             count++;
+           });
+
+           $('#id-toggle-all').get(0).checked = true;
+
+           Inbox.display_bar(count);
+         }
+         ,
+         select_none : function() {
+           $('.message-item input[type=checkbox]').removeAttr('checked').closest('.message-item').removeClass('selected');
+           $('#id-toggle-all').get(0).checked = false;
+
+           Inbox.display_bar(0);
+         }
+         ,
+         select_read : function() {
+           $('.message-unread input[type=checkbox]').removeAttr('checked').closest('.message-item').removeClass('selected');
+
+           var count = 0;
+           $('.message-item:not(.message-unread) input[type=checkbox]').each(function(){
+             this.checked = true;
+             $(this).closest('.message-item').addClass('selected');
+             count++;
+           });
+           Inbox.display_bar(count);
+         }
+         ,
+         select_unread : function() {
+           $('.message-item:not(.message-unread) input[type=checkbox]').removeAttr('checked').closest('.message-item').removeClass('selected');
+
+           var count = 0;
+           $('.message-unread input[type=checkbox]').each(function(){
+             this.checked = true;
+             $(this).closest('.message-item').addClass('selected');
+             count++;
+           });
+
+           Inbox.display_bar(count);
+         }
+       }
+
+       //show message list (back from writing mail or reading a message)
+       Inbox.show_list = function() {
+         $('.message-navbar').addClass('hide');
+         $('#id-message-list-navbar').removeClass('hide');
+
+         $('.message-footer').addClass('hide');
+         $('.message-footer:not(.message-footer-style2)').removeClass('hide');
+
+         $('.message-list').removeClass('hide').next().addClass('hide');
+         //hide the message item / new message window and go back to list
+       }
+
+       //show write mail form
+       Inbox.show_form = function() {
+         if($('.message-form').is(':visible')) return;
+         if(!form_initialized) {
+           initialize_form();
+         }
+
+
+         var message = $('.message-list');
+         $('.message-container').append('<div class="message-loading-overlay"><i class="fa-spin ace-icon fa fa-spinner orange2 bigger-160"></i></div>');
+
+         setTimeout(function() {
+           message.next().addClass('hide');
+
+           $('.message-container').find('.message-loading-overlay').remove();
+
+           $('.message-list').addClass('hide');
+           $('.message-footer').addClass('hide');
+           $('.message-form').removeClass('hide').insertAfter('.message-list');
+
+           $('.message-navbar').addClass('hide');
+           $('#id-message-new-navbar').removeClass('hide');
+
+
+           //reset form??
+           $('.message-form .wysiwyg-editor').empty();
+
+           $('.message-form .ace-file-input').closest('.file-input-container:not(:first-child)').remove();
+           $('.message-form input[type=file]').ace_file_input('reset_input');
+
+           $('.message-form').get(0).reset();
+
+         }, 300 + parseInt(Math.random() * 300));
+       }
+
+
+
+
+       var form_initialized = false;
+       function initialize_form() {
+         if(form_initialized) return;
+         form_initialized = true;
+
+         //intialize wysiwyg editor
+         $('.message-form .wysiwyg-editor').ace_wysiwyg({
+           toolbar:
+           [
+             'bold',
+             'italic',
+             'strikethrough',
+             'underline',
+             null,
+             'justifyleft',
+             'justifycenter',
+             'justifyright',
+             null,
+             'createLink',
+             'unlink',
+             null,
+             'undo',
+             'redo'
+           ]
+         }).prev().addClass('wysiwyg-style1');
+
+
+
+         //file input
+         $('.message-form input[type=file]').ace_file_input()
+         .closest('.ace-file-input')
+         .addClass('width-90 inline')
+         .wrap('<div class="form-group file-input-container"><div class="col-sm-7"></div></div>');
+
+         //Add Attachment
+         //the button to add a new file input
+         $('#id-add-attachment')
+         .on('click', function(){
+           var file = $('<input type="file" name="attachment[]" />').appendTo('#form-attachments');
+           file.ace_file_input();
+
+           file.closest('.ace-file-input')
+           .addClass('width-90 inline')
+           .wrap('<div class="form-group file-input-container"><div class="col-sm-7"></div></div>')
+           .parent().append('<div class="action-buttons pull-right col-xs-1">\
+             <a href="#" data-action="delete" class="middle">\
+               <i class="ace-icon fa fa-trash-o red bigger-130 middle"></i>\
+             </a>\
+           </div>')
+           .find('a[data-action=delete]').on('click', function(e){
+             //the button that removes the newly inserted file input
+             e.preventDefault();
+             $(this).closest('.file-input-container').hide(300, function(){ $(this).remove() });
+           });
+         });
+       }//initialize_form
+
+       //turn the recipient field into a tag input field!
+       /**
+       var tag_input = $('#form-field-recipient');
+       try {
+         tag_input.tag({placeholder:tag_input.attr('placeholder')});
+       } catch(e) {}
+
+
+       //and add form reset functionality
+       $('#id-message-form').on('reset', function(){
+         $('.message-form .message-body').empty();
+
+         $('.message-form .ace-file-input:not(:first-child)').remove();
+         $('.message-form input[type=file]').ace_file_input('reset_input_ui');
+
+         var val = tag_input.data('value');
+         tag_input.parent().find('.tag').remove();
+         $(val.split(',')).each(function(k,v){
+           tag_input.before('<span class="tag">'+v+'<button class="close" type="button">&times;</button></span>');
+         });
+       });
+       */
+
+     });
+   </script>
+
 <%- include footer %>
