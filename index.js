@@ -9,9 +9,56 @@ var moment = require("moment");
 var mongoose = require("mongoose");
 var models = require("./models/models.js");
 var checkLogin = require('./checkLogin.js');
-var fs =  require("fs");
+
+//waterline
+var Waterline = require('waterline');
+var mysqlAdapter = require('sails-mysql');
+
 var User = models.User;
 var Note = models.Note;
+
+var ormNote;
+
+// 适配器
+var adapters = {
+  mysql: mysqlAdapter,
+  default: 'mysql'
+};
+
+// 连接
+var connections = {
+  mysql: {
+    adapter: 'mysql',
+    url: 'mysql://root:920406@localhost/mynote'
+  }
+};
+
+var orm = new Waterline();
+
+// 加载数据集合
+orm.loadCollection(Note);
+
+
+var config = {
+  adapters: adapters,
+  connections: connections
+}
+
+orm.initialize(config, function(err, models){
+  if(err) {
+    console.error('orm initialize failed.', err)
+    return;
+  }
+  ormNote = models.collections.note;
+  // console.log('models:', models);
+  // models.collections.user.create({username: 'Sid'}, function(err, user){
+  //   console.log('after user.create, err, user:', err, user);
+  // });
+});
+
+
+
+var fs =  require("fs");
 mongoose.connect("mongodb://localhost:27017/notes");
 mongoose.connection.on('error', console.error.bind(console,"数据库连接失败"));
 
@@ -110,7 +157,7 @@ app.get('/',function(req,res){
 
 app.get('/start/:curr',checkLogin.noLogin);
 app.get('/start/:curr',function(req,res){
-  Note.find({author: req.session.user.username})
+  ormNote.find({author: req.session.user.username})
     .exec(function(err,allNotes){
       if (err) {
         console.log(err);
@@ -303,28 +350,42 @@ app.get('/post',function(req,res){
 });
 
 app.post('/post',function(req,res){
-  var note = new Note({
+  // var note = new Note({
+    // title: req.body.title,
+    // author: req.session.user.username,
+    // tag: req.body.tag,
+    // content: req.body.content
+  // });
+  ormNote.create({
     title: req.body.title,
     author: req.session.user.username,
     tag: req.body.tag,
-    content: req.body.content
-  });
+    content: req.body.content}).exec(function(err, user) {
+      if (err){
+        req.session.error="发表文章失败"
+        console.log(err);
+        return res.redirect('/post');
+      }
+      console.log('文章发表成功!')
+      return res.redirect('/');
 
-  note.save(function(err,doc) {
-    if (err){
-      req.session.error="发表文章失败"
-      console.log(err);
-      return res.redirect('/post');
-    }
-    console.log('文章发表成功!')
-    return res.redirect('/');
+    });
 
-  });
+  // note.save(function(err,doc) {
+  //   if (err){
+  //     req.session.error="发表文章失败"
+  //     console.log(err);
+  //     return res.redirect('/post');
+  //   }
+  //   console.log('文章发表成功!')
+  //   return res.redirect('/');
+  //
+  // });
 });
 
 app.get('/detail/:_id',function(req,res){
   console.log('查看笔记')
-  Note.findOne({_id:req.params._id})
+  ormNote.findOne({_id:req.params._id})
     .exec(function(err, art){
       if (err) {
         req.session.error="查看笔记失败";
